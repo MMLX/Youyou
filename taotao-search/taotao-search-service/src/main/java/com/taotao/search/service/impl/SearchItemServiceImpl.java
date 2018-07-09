@@ -33,11 +33,11 @@ public class SearchItemServiceImpl implements SearchItemService {
                 SolrInputDocument doc = new SolrInputDocument();
                 doc.addField("id", searchItem.getId());
                 doc.addField("item_title", searchItem.getTitle());
-                doc.addField("item_sell_point", searchItem.getSell_point());
+                doc.addField("item_sell_point", searchItem.getSellPoint());
                 doc.addField("item_price", searchItem.getPrice());
                 doc.addField("item_image", searchItem.getImage());
-                doc.addField("item_category_name", searchItem.getCategory_name());
-                doc.addField("item_desc", searchItem.getItem_desc());
+                doc.addField("item_category_name", searchItem.getCategoryName());
+                doc.addField("item_desc", searchItem.getItemDesc());
                 solrServer.add(doc);
             }
             //提交
@@ -65,11 +65,11 @@ public class SearchItemServiceImpl implements SearchItemService {
         // 3、使用SolrServer对象写入索引库。
         document.addField("id", searchItem.getId());
         document.addField("item_title", searchItem.getTitle());
-        document.addField("item_sell_point", searchItem.getSell_point());
+        document.addField("item_sell_point", searchItem.getSellPoint());
         document.addField("item_price", searchItem.getPrice());
         document.addField("item_image", searchItem.getImage());
-        document.addField("item_category_name", searchItem.getCategory_name());
-        document.addField("item_desc", searchItem.getItem_desc());
+        document.addField("item_category_name", searchItem.getCategoryName());
+        document.addField("item_desc", searchItem.getItemDesc());
         // 5、向索引库中添加文档。
         try {
             solrServer.add(document);

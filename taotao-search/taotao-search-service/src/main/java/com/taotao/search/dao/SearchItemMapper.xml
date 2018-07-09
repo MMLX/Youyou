@@ -6,10 +6,10 @@
 		SELECT
 			a.id,
 			a.title,
-			a.sellPoint sell_point,
+			a.sellPoint,
 			a.price,
 			a.image,
-			b.`name` category_name,
+			b.`name`,
 			c.itemDesc
 		FROM
 			tbitem a
