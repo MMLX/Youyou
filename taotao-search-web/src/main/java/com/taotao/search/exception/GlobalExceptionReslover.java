@@ -26,8 +26,6 @@ public class GlobalExceptionReslover implements HandlerExceptionResolver{
         modelAndView.addObject("message", "系统发生异常，请稍后重试");
         //跳转的页面
         modelAndView.setViewName("error/exception");
-
-
         return modelAndView;
     }
 }

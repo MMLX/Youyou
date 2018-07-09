@@ -66,10 +66,31 @@
 		<aop:advisor advice-ref="txAdvice"
 			pointcut="execution(* com.taotao.service.*.*(..))" />
 	</aop:config>
-	
-	
-	
-	<!-- 使用dubbo发布服务 -->
+
+	<!--配置链接工厂对象-->
+	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<constructor-arg name="brokerURL" value="tcp://192.168.25.168:61616"/>
+	</bean>
+	<!--通过spring内置的对象来创建链接对象-->
+	<bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="targetConnectionFactory"/>
+	</bean>
+
+	<!--通过spring自己的对象来得到JmsTemplate对象-->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<constructor-arg name="connectionFactory" ref="connectionFactory"/>
+	</bean>
+	<!--点对点对象-->
+	<bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg name="name" value="spring-queue-demo"/>
+	</bean>
+
+	<!--订阅与发布对象-->
+	<bean id="topic" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg name="name" value="spring-topic-demo"/>
+	</bean>
+
+ 	<!-- 使用dubbo发布服务 -->
 	<!-- 提供方应用信息，用于计算依赖关系 -->
 	<dubbo:application name="taotao-manager" />
 	<dubbo:registry protocol="zookeeper" address="192.168.25.167:2181" />

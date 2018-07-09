@@ -3,7 +3,10 @@ package com.taotao.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.container.page.PageHandler;
@@ -17,6 +20,12 @@ import com.taotao.mapper.TbItemDescMapper;
 import com.taotao.pojo.TbItem;
 import com.taotao.pojo.TbItemDesc;
 import com.taotao.service.ItemService;
+
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
 /**
  * @Service替代 bean标签
  * id itemServiceImpl
@@ -24,6 +33,11 @@ import com.taotao.service.ItemService;
  */
 @Service
 public class ItemServiceImpl implements ItemService {
+
+	@Autowired
+	private JmsTemplate jmsTemplate;
+	@Autowired
+	private ActiveMQTopic topic;
 
 	@Autowired
 	private TbItemMapper tbItemMapper;
@@ -59,7 +73,7 @@ public class ItemServiceImpl implements ItemService {
 		 * 				price商品价格 num库存 barcode条形码 uploadFile图片上传 desc富文本编辑器
 		 * Tbitem类上面的属性  对于页面上面 没有的是 id status created updated image
 		 */
-		long itemId = IDUtils.genItemId();
+		final long itemId = IDUtils.genItemId();
 		tbitem.setId(itemId);
 		//默认正常状态
 		tbitem.setStatus((byte) 1);
@@ -84,7 +98,25 @@ public class ItemServiceImpl implements ItemService {
 		tbitemdesc.setUpdated(date);
 		//吧商品描述信息加入到 描述表中
 		tbitemdescMapper.insertTbitemdesc(tbitemdesc);
-		
+
+		/**
+		 * 	在这里发布消息 更新缓存
+		 * 	1.用点对点还是 订阅与发布(因为以后 有可能要同步其他地方，比如订单，购物车。。。)
+		 * 	2.发送过去的数据是什么类型的数据 格式是什么？
+		 * 		只发送id（）
+		 * 		发送json
+		 */
+		jmsTemplate.send(topic, new MessageCreator() {
+			@Override
+			public Message createMessage(Session session) throws JMSException {
+				//发送id
+				TextMessage textMessage = session.createTextMessage(itemId + "");
+				return textMessage;
+			}
+		});
+
+
+
 		return TaotaoResult.build(200, "保存商品成功");
 	}
 	

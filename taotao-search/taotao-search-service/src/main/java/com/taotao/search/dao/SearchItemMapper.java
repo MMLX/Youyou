@@ -12,6 +12,6 @@ public interface SearchItemMapper {
 	 * 查询数据库中的tbitem，tbitemcat，tbitemdesc
 	 * @return SearchItem 
 	 */
-	List<SearchItem> getItemList();
-	
+	public List<SearchItem> getItemList();
+	public SearchItem getItemById(long itemId);
 }
