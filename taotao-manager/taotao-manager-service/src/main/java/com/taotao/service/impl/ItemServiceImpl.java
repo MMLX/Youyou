@@ -3,8 +3,12 @@ package com.taotao.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.taotao.common.utils.JsonUtils;
+import com.taotao.jedis.JedisClient;
 import org.apache.activemq.command.ActiveMQTopic;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
@@ -33,7 +37,18 @@ import javax.jms.TextMessage;
  */
 @Service
 public class ItemServiceImpl implements ItemService {
+	@Value("${ITEM_INFO}")
+	private String ITEM_INFO;
+	@Value("${BASE}")
+	private String BASE;
+	@Value("${DESC}")
+	private String DESC;
+	@Value("${PARAM}")
+	private String PARAM;
 
+
+	@Autowired
+	private JedisClient jedisClient;
 	@Autowired
 	private JmsTemplate jmsTemplate;
 	@Autowired
@@ -45,7 +60,26 @@ public class ItemServiceImpl implements ItemService {
 	private TbItemDescMapper tbitemdescMapper;
 	@Override
 	public TbItem getItemById(long itemId) {
+		//从缓存中取数据
+		try {
+			String json = jedisClient.get(ITEM_INFO + ":" + itemId + BASE);
+			//判断不为null 并且 不为 ""
+			if(StringUtils.isNotBlank(json)){
+				TbItem tbItem = JsonUtils.jsonToPojo(json, TbItem.class);
+				return tbItem;
+			}
+		}catch (Exception e){
+
+		}
+
 		TbItem tbitem = tbItemMapper.getItemById(itemId);
+		//吧数据库中的数据加入缓存
+		try {
+			jedisClient.set(ITEM_INFO + ":" + itemId + BASE, JsonUtils.objectToJson(tbitem));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
 		return tbitem;
 	}
 	@Override
@@ -122,7 +156,25 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public TbItemDesc getItemDescById(long itemId) {
+		//从缓存中取数据
+		try {
+			String json = jedisClient.get(ITEM_INFO + ":" + itemId + DESC);
+			//判断不为null 并且 不为 ""
+			if(StringUtils.isNotBlank(json)){
+				TbItemDesc tbItemDesc = JsonUtils.jsonToPojo(json, TbItemDesc.class);
+				return tbItemDesc;
+			}
+		}catch (Exception e){
+
+		}
+
+
 		TbItemDesc itemDesc = tbitemdescMapper.getItemDescById(itemId);
+		try {
+			jedisClient.set(ITEM_INFO + ":" + itemId + DESC, JsonUtils.objectToJson(itemDesc));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		return itemDesc;
 	}
 
