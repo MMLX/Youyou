@@ -119,6 +119,12 @@ public class ItemServiceImpl implements ItemService {
 
 		return TaotaoResult.build(200, "保存商品成功");
 	}
-	
+
+	@Override
+	public TbItemDesc getItemDescById(long itemId) {
+		TbItemDesc itemDesc = tbitemdescMapper.getItemDescById(itemId);
+		return itemDesc;
+	}
+
 
 }

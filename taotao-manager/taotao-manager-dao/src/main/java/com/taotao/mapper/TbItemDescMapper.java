@@ -8,4 +8,6 @@ public interface TbItemDescMapper {
 	 * @param tbitemdesc 需要添加的商品描述对象
 	 */
 	public void insertTbitemdesc(TbItemDesc tbitemdesc);
+
+	public TbItemDesc getItemDescById(long itemId);
 }
