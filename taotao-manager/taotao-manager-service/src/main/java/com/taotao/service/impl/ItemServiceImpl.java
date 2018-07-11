@@ -45,6 +45,8 @@ public class ItemServiceImpl implements ItemService {
 	private String DESC;
 	@Value("${PARAM}")
 	private String PARAM;
+	@Value("${Expiry_TIME}")
+	private int Expiry_TIME;
 
 
 	@Autowired
@@ -76,6 +78,7 @@ public class ItemServiceImpl implements ItemService {
 		//吧数据库中的数据加入缓存
 		try {
 			jedisClient.set(ITEM_INFO + ":" + itemId + BASE, JsonUtils.objectToJson(tbitem));
+			jedisClient.expire(ITEM_INFO + ":" + itemId + BASE,Expiry_TIME);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
@@ -172,6 +175,7 @@ public class ItemServiceImpl implements ItemService {
 		TbItemDesc itemDesc = tbitemdescMapper.getItemDescById(itemId);
 		try {
 			jedisClient.set(ITEM_INFO + ":" + itemId + DESC, JsonUtils.objectToJson(itemDesc));
+			jedisClient.expire(ITEM_INFO + ":" + itemId + DESC,Expiry_TIME);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
