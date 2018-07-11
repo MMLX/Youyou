@@ -221,7 +221,7 @@
 					<b></b>如果您发现商品信息不准确，欢迎纠错
 				</div>
 				<div id="item-desc" class="detail-content">
-						${itemDesc.itemDesc }
+						<!--商品详情信息-->
 				</div>
 			</div>
 			<div class="mc hide" data-widget="tab-content" id="product-detail-2">
@@ -289,6 +289,7 @@
 				}
 			}
 	};
+	//页面加载完毕走这个function
 	$(function(){
 		//取商品id
 		var itemId = "${item.id}";

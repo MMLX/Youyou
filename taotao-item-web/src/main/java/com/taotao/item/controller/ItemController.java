@@ -23,11 +23,17 @@ public class ItemController {
         //返回给页面的对象
         Item item = new Item(tbItem);
         //返回给页面的信息
-        TbItemDesc itemDesc = itemService.getItemDescById(itemId);
         model.addAttribute("item",item);
-        model.addAttribute("itemDesc",itemDesc);
         return "item";
     }
+
+    @RequestMapping(value = "/item/desc/{itemId}")
+    @ResponseBody
+    public String showItemDesc(@PathVariable long itemId,Model model){
+        TbItemDesc itemDesc = itemService.getItemDescById(itemId);
+        return itemDesc.getItemDesc();
+    }
+
     @RequestMapping(value = "/item/param/{itemId}")
     @ResponseBody
     public String showItemParam(@PathVariable long itemId,Model model){
@@ -35,4 +41,6 @@ public class ItemController {
 
         return itemParam;
     }
+
+
 }
