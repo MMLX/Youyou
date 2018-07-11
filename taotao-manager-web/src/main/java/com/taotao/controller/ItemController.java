@@ -34,9 +34,9 @@ public class ItemController {
 	///item/save
 	@RequestMapping("/save")
 	@ResponseBody
-	public TaotaoResult saveItem(TbItem tbitem,String desc){
+	public TaotaoResult saveItem(TbItem tbitem,String desc,String paramData){
 		// 200 成功
-		TaotaoResult result = itemService.addItem(tbitem, desc);
+		TaotaoResult result = itemService.addItem(tbitem, desc,paramData);
 		return result;
 	}
 	

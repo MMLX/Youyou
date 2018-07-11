@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.taotao.common.utils.JsonUtils;
 import com.taotao.jedis.JedisClient;
+import com.taotao.mapper.TbItemParamItemMapper;
+import com.taotao.pojo.TbItemParamItem;
 import org.apache.activemq.command.ActiveMQTopic;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +62,9 @@ public class ItemServiceImpl implements ItemService {
 	private TbItemMapper tbItemMapper;
 	@Autowired 
 	private TbItemDescMapper tbitemdescMapper;
+	@Autowired
+	private TbItemParamItemMapper tbItemParamItemMapper;
+
 	@Override
 	public TbItem getItemById(long itemId) {
 		//从缓存中取数据
@@ -104,7 +109,7 @@ public class ItemServiceImpl implements ItemService {
 		return result;
 	}
 	@Override
-	public TaotaoResult addItem(TbItem tbitem,String desc) {
+	public TaotaoResult addItem(TbItem tbitem,String desc,String paramData) {
 		/**
 		 * 页面传递过来的数据  cid 分类id  title商品标题  sellPoint商品买点 
 		 * 				price商品价格 num库存 barcode条形码 uploadFile图片上传 desc富文本编辑器
@@ -135,6 +140,18 @@ public class ItemServiceImpl implements ItemService {
 		tbitemdesc.setUpdated(date);
 		//吧商品描述信息加入到 描述表中
 		tbitemdescMapper.insertTbitemdesc(tbitemdesc);
+
+		TbItemParamItem tbItemParamItem = new TbItemParamItem();
+		tbItemParamItem.setItemId(itemId);
+		tbItemParamItem.setParamData(paramData);
+		tbItemParamItem.setCreated(date);
+		tbItemParamItem.setUpdated(date);
+		//存入规格参数
+		tbItemParamItemMapper.insertTbitemParamItem(tbItemParamItem);
+
+
+
+
 
 		/**
 		 * 	在这里发布消息 更新缓存

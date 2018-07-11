@@ -52,11 +52,12 @@
 					  });
 					  return ;
 				  }
+					//吧模板信息添加到数据库中
 				  $(".addGroupTr").show();
 			  });
 			}
 		});
-		
+
 		$(".addGroup").click(function(){
 			  var temple = $(".itemParamAddTemplate li").eq(0).clone();
 			  $(this).parent().parent().append(temple);
@@ -96,8 +97,11 @@
 					});					
 				}
 			});
+			//绑完数据以后 提交到服务器的url地址
 			var url = "/item/param/save/"+$("#itemParamAddTable [name=cid]").val();
+			//传入后台的参数 是一个json类型的数据 key（paramData） value(JSON.stringify(吧一个json转成字符串))
 			$.post(url,{"paramData":JSON.stringify(params)},function(data){
+				//TaotaoResult
 				if(data.status == 200){
 					$.messager.alert('提示','新增商品规格成功!',undefined,function(){
 						$(".panel-tool-close").click();

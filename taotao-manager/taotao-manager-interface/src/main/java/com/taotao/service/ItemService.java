@@ -23,9 +23,10 @@ public interface ItemService {
 	 * 添加商品信息，注意有些数据页面没有传递过来需要手动指定 比如商品id
 	 * @param tbitem 需要添加的商品对象信息
 	 * @param desc 商品描述信息
+	 * @param paramData 商品规格参数
 	 * @return 一个自己定义的结果集  里面包含了 {状态码,消息,数据}
 	 */
-	TaotaoResult addItem(TbItem tbitem, String desc);
+	TaotaoResult addItem(TbItem tbitem, String desc,String paramData);
 
 	/**
 	 * 根据商品id查询商品描述信息
