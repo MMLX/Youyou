@@ -2,6 +2,7 @@ package com.taotao.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.taotao.common.utils.JsonUtils;
 import com.taotao.jedis.JedisClient;
@@ -109,7 +110,7 @@ public class ItemServiceImpl implements ItemService {
 		return result;
 	}
 	@Override
-	public TaotaoResult addItem(TbItem tbitem,String desc,String paramData) {
+	public TaotaoResult addItem(TbItem tbitem,String desc,String itemParams) {
 		/**
 		 * 页面传递过来的数据  cid 分类id  title商品标题  sellPoint商品买点 
 		 * 				price商品价格 num库存 barcode条形码 uploadFile图片上传 desc富文本编辑器
@@ -143,7 +144,7 @@ public class ItemServiceImpl implements ItemService {
 
 		TbItemParamItem tbItemParamItem = new TbItemParamItem();
 		tbItemParamItem.setItemId(itemId);
-		tbItemParamItem.setParamData(paramData);
+		tbItemParamItem.setParamData(itemParams);
 		tbItemParamItem.setCreated(date);
 		tbItemParamItem.setUpdated(date);
 		//存入规格参数
@@ -197,6 +198,36 @@ public class ItemServiceImpl implements ItemService {
 			e.printStackTrace();
 		}
 		return itemDesc;
+	}
+	//要展示规格参数的话应该是一个html页面，所以呢 我们要在java代码里面自己拼接html
+	@Override
+	public String getItemParamItemByItemId(long itemId) {
+		TbItemParamItem itemParamItem = tbItemParamItemMapper.getItemParamItemByItemId(itemId);
+		//这个是数据库中json数据（模板+json）
+		String paramData = itemParamItem.getParamData();
+		// map(key=group  value=param{key ：k，value:v})
+		List<Map> jsonList  = JsonUtils.jsonToList(paramData, Map.class);
+		StringBuffer sb = new StringBuffer();
+		sb.append("<table cellpadding=\"0\" cellspacing=\"1\" width=\"100%\" border=\"0\" class=\"Ptable\">\n");
+		sb.append("    <tbody>\n");
+		for(Map m1:jsonList) {
+			sb.append("        <tr>\n");
+			sb.append("            <th class=\"tdTitle\" colspan=\"2\">"+m1.get("group")+"</th>\n");
+			sb.append("        </tr>\n");
+			List<Map> list2 = (List<Map>) m1.get("params");
+			for(Map m2:list2) {
+				sb.append("        <tr>\n");
+				sb.append("            <td class=\"tdTitle\">"+m2.get("k")+"</td>\n");
+				sb.append("            <td>"+m2.get("v")+"</td>\n");
+				sb.append("        </tr>\n");
+			}
+		}
+		sb.append("    </tbody>\n");
+		sb.append("</table>");
+
+
+
+		return sb.toString();
 	}
 
 

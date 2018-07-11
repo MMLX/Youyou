@@ -4,4 +4,7 @@
     <insert id="insertTbitemParamItem" parameterType="com.taotao.pojo.TbItemParamItem">
         INSERT INTO tbitemparamitem(itemId, paramData, created, updated) VALUE (#{itemId},#{paramData},#{created},#{updated});
     </insert>
+    <select id="getItemParamItemByItemId" parameterType="long" resultType="com.taotao.pojo.TbItemParamItem">
+        SELECT * FROM tbitemparamitem WHERE itemId = #{itemId}
+    </select>
 </mapper>
