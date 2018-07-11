@@ -130,8 +130,11 @@ var TT = TAOTAO = {
     			    				// 填写到cid中
     			    				_ele.parent().find("[name=cid]").val(node.id);
     			    				_ele.next().text(node.text).attr("cid",node.id);
+    			    				//关闭窗口
     			    				$(_win).window('close');
+    			    				//判断是否有值 是否传入了fun
     			    				if(data && data.fun){
+    			    					//call方法代表回调
     			    					data.fun.call(this,node);
     			    				}
     			    			}
