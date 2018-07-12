@@ -22,7 +22,7 @@ Date.prototype.format = function(format){
 var TT = TAOTAO = {
 	// 编辑器参数
 	kingEditorParams : {
-		//指定上传文件参数名称   name的名称
+		//指定上传文件参数名称
 		filePostName  : "uploadFile",
 		//指定上传文件请求的url。
 		uploadJson : '/pic/upload',
@@ -130,11 +130,8 @@ var TT = TAOTAO = {
     			    				// 填写到cid中
     			    				_ele.parent().find("[name=cid]").val(node.id);
     			    				_ele.next().text(node.text).attr("cid",node.id);
-    			    				//关闭窗口
     			    				$(_win).window('close');
-    			    				//判断是否有值 是否传入了fun
     			    				if(data && data.fun){
-    			    					//call方法代表回调
     			    					data.fun.call(this,node);
     			    				}
     			    			}
@@ -171,7 +168,6 @@ var TT = TAOTAO = {
      * 
      */
     createWindow : function(params){
-    	//创建一个窗体
     	$("<div>").css({padding:"5px"}).window({
     		width : params.width?params.width:"80%",
     		height : params.height?params.height:"80%",
@@ -194,22 +190,17 @@ var TT = TAOTAO = {
     },
     
     changeItemParam : function(node,formId){
-    	//根据分类id查询该分类的指定模板
     	$.getJSON("/item/param/query/itemcatid/" + node.id,function(data){
 			  if(data.status == 200 && data.data){
 				 $("#"+formId+" .params").show();
-				 //数据库中模板json paramData 吧字符串json 变成 真正的json对象
 				 var paramData = JSON.parse(data.data.paramData);
 				 var html = "<ul>";
-				 //遍历json数据
 				 for(var i in paramData){
-				 	//得到组
 					 var pd = paramData[i];
 					 html+="<li><table>";
 					 html+="<tr><td colspan=\"2\" class=\"group\">"+pd.group+"</td></tr>";
 					 
-					 for(var j in pd.params)
-					 	//得到项
+					 for(var j in pd.params){
 						 var ps = pd.params[j];
 						 html+="<tr><td class=\"param\"><span>"+ps+"</span>: </td><td><input autocomplete=\"off\" type=\"text\"/></td></tr>";
 					 }
@@ -219,7 +210,6 @@ var TT = TAOTAO = {
 				 html+= "</ul>";
 				 $("#"+formId+" .params td").eq(1).html(html);
 			  }else{
-			  	 //不显示规格参数
 				 $("#"+formId+" .params").hide();
 				 $("#"+formId+" .params td").eq(1).empty();
 			  }

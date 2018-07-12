@@ -67,27 +67,24 @@
 			pointcut="execution(* com.taotao.service.*.*(..))" />
 	</aop:config>
 
-	<!--配置链接工厂对象-->
+	<!-- JMS服务厂商提供的ConnectionFactory -->
 	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<constructor-arg name="brokerURL" value="tcp://192.168.25.168:61616"/>
 	</bean>
-	<!--通过spring内置的对象来创建链接对象-->
+	<!-- spring对象ConnectionFactory的封装 -->
 	<bean id="connectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
-		<property name="targetConnectionFactory" ref="targetConnectionFactory"/>
+		<property name="targetConnectionFactory" ref="targetConnectionFactory"></property>
 	</bean>
-
-	<!--通过spring自己的对象来得到JmsTemplate对象-->
+	<!-- 配置JMSTemplate -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<constructor-arg name="connectionFactory" ref="connectionFactory"/>
+		<property name="connectionFactory" ref="connectionFactory"/>
 	</bean>
-	<!--点对点对象-->
-	<bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg name="name" value="spring-queue-demo"/>
+	<!-- 配置消息的Destination对象 -->
+	<bean id="test-queue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg name="name" value="test-queue"></constructor-arg>
 	</bean>
-
-	<!--订阅与发布对象-->
-	<bean id="topic" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg name="name" value="spring-topic-demo"/>
+	<bean id="itemAddtopic" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg name="name" value="item-add-topic"></constructor-arg>
 	</bean>
 
 	<!-- 配置单机版的连接 -->
