@@ -46,10 +46,8 @@ public class SearchItemServiceImpl implements SearchItemService {
             return TaotaoResult.ok();
 
         } catch (SolrServerException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

@@ -60,7 +60,6 @@ public class ContentServiceImpl implements ContentService{
 				return result;
 			}
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -75,7 +74,6 @@ public class ContentServiceImpl implements ContentService{
 		try {
 			jedisClient.hset(CONTENT_KEY,categoryId+"", JsonUtils.objectToJson(result));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;

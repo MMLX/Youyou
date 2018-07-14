@@ -44,7 +44,6 @@ public class PictureServiceImpl implements PictureService {
 			return pictureResult;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		pictureResult.setError(1);
