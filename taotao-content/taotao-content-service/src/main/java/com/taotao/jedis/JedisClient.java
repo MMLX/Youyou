@@ -23,7 +23,7 @@ public interface JedisClient {
 	/**
 	 * 设置key的生存时间
 	 * @param key
-	 * @param seconds 毫秒为单位
+	 * @param seconds 秒为单位
 	 * @return
 	 */
 	Long expire(String key, int seconds);

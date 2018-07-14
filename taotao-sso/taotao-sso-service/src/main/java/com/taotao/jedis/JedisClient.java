@@ -23,7 +23,7 @@ public interface JedisClient {
 	/**
 	 * 设置key的生存时间
 	 * @param key
-	 * @param seconds 毫秒为单位
+	 * @param seconds 秒为单位
 	 * @return
 	 */
 	Long expire(String key, int seconds);
@@ -39,7 +39,8 @@ public interface JedisClient {
 	 * @return
 	 */
 	Long incr(String key);
-	
+	Long del(String key);
+
 	Long hset(String key, String field, String value);
 	String hget(String key, String field);
 	Long hdel(String key, String... field);

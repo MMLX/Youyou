@@ -31,4 +31,12 @@ public interface TbUserMapper {
      * @param tbUser 需要添加的用户信息
      */
     void insertUser(TbUser tbUser);
+
+    /**
+     * 根据账号密码查询用户是否存在 注意密码是md5加密的
+     * @param userName 用户账号
+     * @param passWord 用户面膜
+     * @return 如果不为null则表示用户存在
+     */
+    TbUser getUserByUserAndPass(String userName,String passWord);
 }
