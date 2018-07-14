@@ -1,6 +1,7 @@
 package com.taotao.sso.controller;
 
 import com.taotao.common.pojo.TaotaoResult;
+import com.taotao.pojo.TbUser;
 import com.taotao.sso.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,12 @@ public class UserController {
     @ResponseBody
     public TaotaoResult checkData(@PathVariable String param,@PathVariable Integer type ){
         TaotaoResult result = userService.checkData(param, type);
+        return result;
+    }
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @ResponseBody
+    public TaotaoResult register(TbUser tbUser){
+        TaotaoResult result = userService.createUser(tbUser);
         return result;
     }
 }

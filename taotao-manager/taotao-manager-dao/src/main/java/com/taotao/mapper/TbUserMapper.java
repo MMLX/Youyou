@@ -25,4 +25,10 @@ public interface TbUserMapper {
      * @return TbUser如果对象不为null则表示email已经存在
      */
     TbUser getUserByEmail(String email);
+
+    /**
+     * 添加一个用户信息到数据库
+     * @param tbUser 需要添加的用户信息
+     */
+    void insertUser(TbUser tbUser);
 }
