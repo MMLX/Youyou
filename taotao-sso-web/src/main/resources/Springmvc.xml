@@ -48,6 +48,11 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<!--配置静态资源访问权限-->
+	<mvc:resources mapping="/WEB-INF/css" location="/css/**"/>
+	<mvc:resources mapping="/WEB-INF/images" location="/images/**"/>
+	<mvc:resources mapping="/WEB-INF/js" location="/js/**"/>
+
 	<!-- 引用dubbo服务 -->
 	<dubbo:application name="taotao-portal-web"/>
 	<dubbo:registry protocol="zookeeper" address="192.168.25.167:2181"/>	

@@ -41,12 +41,7 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<!--
-		*.action  动态资源
-		*.do      动态资源
-		*.html    伪静态资源
-		seo
-		1.竞价排名	2.seo  1.是否是静态文件  2.页面是否经常改变
-
+		伪静态化
 	 -->
 	<servlet-mapping>
 		<servlet-name>taotao-sso-web</servlet-name>

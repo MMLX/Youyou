@@ -88,5 +88,4 @@ public class JedisClientPool implements JedisClient {
 		jedis.close();
 		return result;
 	}
-
 }
