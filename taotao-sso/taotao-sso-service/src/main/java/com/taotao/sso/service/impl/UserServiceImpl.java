@@ -64,10 +64,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isBlank(tbUser.getPhone())) {
             return TaotaoResult.build(400, "手机号码不能为空");
         }
-        //校验email是否为空
-        if (StringUtils.isBlank(tbUser.getEmail())) {
-            return TaotaoResult.build(400, "邮箱不能为空");
-        }
+
         //校验账号是否重复
         result = checkData(tbUser.getUserName(), 1);
         if (!(boolean) result.getData()) {
@@ -78,11 +75,7 @@ public class UserServiceImpl implements UserService {
         if (!(boolean) result.getData()) {
             return TaotaoResult.build(400, "此手机号码已经被使用");
         }
-        //校验邮箱是否重复
-        result = checkData(tbUser.getEmail(), 3);
-        if (!(boolean) result.getData()) {
-            return TaotaoResult.build(400, "此邮箱已经被使用");
-        }
+
 
         // 2、补全TbUser其他属性。
         Date date = new Date();
@@ -129,6 +122,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public TaotaoResult getUserByToken(String token) {
         String json = jedisClient.get(USER_INFO + ":" + token);
+        if (StringUtils.isBlank(json)) {
+            // 3、如果查询不到数据。返回用户已经过期。
+            return TaotaoResult.build(400, "用户登录已经过期，请重新登录。");
+        }
         //如果直接这样返回 那么 他认为你这个东西 是String字符串 变成的json 他会自动加上转移符
         TbUser tbUser = JsonUtils.jsonToPojo(json, TbUser.class);
         return TaotaoResult.ok(tbUser);

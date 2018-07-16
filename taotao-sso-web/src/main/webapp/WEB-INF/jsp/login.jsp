@@ -25,7 +25,7 @@
                 <div class="item fore1">
                     <span>用户名</span>
                     <div class="item-ifo">
-                        <input type="text" id="loginname" name="username" class="text"  tabindex="1" autocomplete="off"/>
+                        <input type="text" id="loginname" name="userName" class="text"  tabindex="1" autocomplete="off"/>
                         <div class="i-name ico"></div>
                         <label id="loginname_succeed" class="blank invisible"></label>
                         <label id="loginname_error" class="hide"><b></b></label>
@@ -42,7 +42,7 @@
                 <div class="item fore2">
                     <span>密码</span>
                     <div class="item-ifo">
-                        <input type="password" id="nloginpwd" name="password" class="text" tabindex="2" autocomplete="off"/>
+                        <input type="password" id="nloginpwd" name="passWord" class="text" tabindex="2" autocomplete="off"/>
                         <div class="i-pass ico"></div>
                         <label id="loginpwd_succeed" class="blank invisible"></label>
                         <label id="loginpwd_error" class="hide"></label>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="free-regist">
-            <span><a href="/user/showRegister" clstag="passport|keycount|login|08">免费注册&gt;&gt;</a></span>
+            <span><a href="http://localhost:8088/page/register" clstag="passport|keycount|login|08">免费注册&gt;&gt;</a></span>
         </div>
     </div>
 </form>

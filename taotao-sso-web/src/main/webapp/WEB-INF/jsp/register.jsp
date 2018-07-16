@@ -39,7 +39,7 @@
 
                     <div class="fl item-ifo">
                         <div class="o-intelligent-regName">
-                            <input type="text" id="regName" name="username" class="text" tabindex="1" autoComplete="off"
+                            <input type="text" id="regName" name="userName" class="text" tabindex="1" autoComplete="off"
                                    onpaste="return false;"
                                    value=""
                                    onfocus="if(this.value=='') this.value='';this.style.color='#333'"
@@ -56,7 +56,7 @@
                         <span class="label"><b class="ftx04">*</b>请设置密码：</span>
 
                         <div class="fl item-ifo">
-                            <input type="password" id="pwd" name="password" class="text" tabindex="2"
+                            <input type="password" id="pwd" name="passWord" class="text" tabindex="2"
                                    style="ime-mode:disabled;"
                                    onpaste="return  false" autocomplete="off"/>
                             <i class="i-pass"></i>
@@ -117,7 +117,7 @@
 	var REGISTER={
 		param:{
 			//单点登录系统的url
-			surl:""
+			surl:"http://localhost:8088"
 		},
 		inputcheck:function(){
 				//不能为空检查
@@ -172,7 +172,9 @@
 	            	
 		},
 		doSubmit:function() {
+		    alert($("#personRegForm").serialize());
 			$.post("/user/register",$("#personRegForm").serialize(), function(data){
+
 				if(data.status == 200){
 					alert('用户注册成功，请登录！');
 					REGISTER.login();
