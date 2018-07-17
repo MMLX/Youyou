@@ -51,6 +51,8 @@ String password, String basePath,
 					}
 				}
 			}
+			//解决上传图片有时候会出现0KB的情况
+			ftp.enterLocalPassiveMode();
 			//设置上传文件的类型为二进制类型
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);
 			//上传文件
