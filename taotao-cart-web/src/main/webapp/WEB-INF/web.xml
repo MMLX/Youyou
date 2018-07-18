@@ -46,5 +46,7 @@
 	<servlet-mapping>
 		<servlet-name>taotao-cart</servlet-name>
 		<url-pattern>*.html</url-pattern>
+		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
+
 </web-app>

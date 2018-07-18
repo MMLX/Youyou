@@ -306,7 +306,7 @@
 	//加入购物车
 	function addCart() {
 		var num = $("#buy-num").val();
-		location.href = "http://localhsot:8089/cart/add/${item.id}.html?num="+num;
+		location.href = "http://localhost:8089/cart/add/${item.id}.html?num="+num;
     }
 </script>
 </body>
