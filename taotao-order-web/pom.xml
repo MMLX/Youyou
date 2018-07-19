@@ -13,9 +13,16 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <dependencies>
+        <!--订单服务-->
         <dependency>
             <groupId>com.taotao</groupId>
             <artifactId>taotao-order-interface</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!--单点登录系统服务-->
+        <dependency>
+            <groupId>com.taotao</groupId>
+            <artifactId>taotao-sso-interface</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!-- Spring -->

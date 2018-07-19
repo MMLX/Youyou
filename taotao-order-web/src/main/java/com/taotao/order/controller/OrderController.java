@@ -3,6 +3,7 @@ package com.taotao.order.controller;
 import com.taotao.common.utils.CookieUtils;
 import com.taotao.common.utils.JsonUtils;
 import com.taotao.pojo.TbItem;
+import com.taotao.pojo.TbUser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,9 @@ public class OrderController {
          * 5.吧取到的数据存入域里面
          * 6.跳转页面
          */
+        TbUser user = (TbUser) request.getAttribute("user");
+        //根据id查询用户的地址
+        System.out.println(user);
         List<TbItem> cartList = getCartList(request);
         request.setAttribute("cartList",cartList);
         return "order-cart";

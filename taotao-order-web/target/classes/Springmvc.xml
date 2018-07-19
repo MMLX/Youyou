@@ -56,13 +56,8 @@
 	</bean>	
 	
 	
-	<!--配置拦截器-->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/order/**"/>
-			<bean class="com.taotao.order.interceptor.LoginInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
+
+	
 	
 	
 	
@@ -75,6 +70,6 @@
 		<dubbo:reference interface="com.taotao.service.ItemService" id="itemService" />
 	 -->
 	
-	<dubbo:reference interface="com.taotao.sso.service.UserService" id="userService" timeout="30000" />
+	<!--<dubbo:reference interface="com.taotao.service.ItemService" id="itemService" timeout="30000" />-->
 	
 </beans>
