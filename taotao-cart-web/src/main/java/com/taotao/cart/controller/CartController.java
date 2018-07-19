@@ -70,7 +70,6 @@ public class CartController {
         return "cart";
     }
 
-    //"/cart/update/num/"+_thisInput.attr("itemId")+"/"+_thisInput.val() + ".html"
     @RequestMapping("/update/num/{itemId}/{num}")
     @ResponseBody
     public TaotaoResult updateNum(@PathVariable Long itemId, @PathVariable Integer num, HttpServletRequest request, HttpServletResponse response) {
@@ -87,7 +86,6 @@ public class CartController {
         return TaotaoResult.ok();
     }
 
-    ///cart/delete/${cart.id}.html
     @RequestMapping("/delete/{itemId}")
     public String deleteCartItem(@PathVariable Long itemId, HttpServletRequest request, HttpServletResponse response) {
         List<TbItem> list = getCartList(request);

@@ -61,7 +61,6 @@ public class UserController {
     public String getUserByToken(@PathVariable String token, String callback) {
         TaotaoResult result = userService.getUserByToken(token);
         if (StringUtils.isNotBlank(callback)) {
-            //js  callback function(json);
             String resultStr = callback + "(" + JsonUtils.objectToJson(result) + ");";
             System.out.println(resultStr);
             return resultStr;
