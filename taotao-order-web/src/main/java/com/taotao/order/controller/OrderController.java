@@ -1,13 +1,19 @@
 package com.taotao.order.controller;
 
+import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.common.utils.CookieUtils;
 import com.taotao.common.utils.JsonUtils;
+import com.taotao.order.pojo.OrderInfo;
+import com.taotao.order.service.OrderService;
 import com.taotao.pojo.TbItem;
 import com.taotao.pojo.TbUser;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -18,6 +24,10 @@ import java.util.List;
 public class OrderController {
     @Value("${TT_CART}")
     private String TT_CART;
+    @Autowired
+    private OrderService orderService;
+
+
     @RequestMapping("/order-cart")
     public String showOrderCart(HttpServletRequest request) {
         /**
@@ -45,6 +55,31 @@ public class OrderController {
             return list;
         }
         return new ArrayList<>();
+    }
+    @RequestMapping("/create")
+    public String createOrder(OrderInfo orderInfo,HttpServletRequest request){
+        //走到这里是先经过了拦截器
+        TbUser tbUser = (TbUser) request.getAttribute("user");
+        //订单表中用户id
+        orderInfo.setUserId(tbUser.getId());
+        //订单表中用户昵称
+        orderInfo.setBuyerNick(tbUser.getUserName());
+        //插入订单表+订单与商品的关联表+订单与地址关联表
+        TaotaoResult result = orderService.createOrder(orderInfo);
+        //取订单号
+        String orderId = result.getData().toString();
+        // a)需要Service返回订单号
+        request.setAttribute("orderId", orderId);
+        request.setAttribute("payment", orderInfo.getPayment());
+
+        // b)当前日期加三天。
+        DateTime dateTime = new DateTime();
+        dateTime = dateTime.plusDays(3);
+        //正常的情况是物流返回给我们的
+        request.setAttribute("date", dateTime.toString("yyyy-MM-dd"));
+
+        return "success";
+
     }
 
 }

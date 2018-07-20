@@ -40,12 +40,12 @@
 			<input type="hidden" name="orderItems[${status.index}].picPath" value="${cart.image}"/>
 		</c:forEach>
 		<input type="hidden" name="payment" value="<fmt:formatNumber groupingUsed="false" maxFractionDigits="2" minFractionDigits="2" value="${totalPrice/100 }"/>"/>
-		<input type="hidden" name="orderShipping.receiverName" value="入云龙"/>
-		<input type="hidden" name="orderShipping.receiverMobile" value="15891588888"/>
-		<input type="hidden" name="orderShipping.receiverState" value="北京"/>
-		<input type="hidden" name="orderShipping.receiverCity" value="北京"/>
-		<input type="hidden" name="orderShipping.receiverDistrict" value="昌平区"/>
-		<input type="hidden" name="orderShipping.receiverAddress" value="西三旗 xxxxxxxxx"/>
+		<input type="hidden" name="orderShipping.receiverName" value="clive"/>
+		<input type="hidden" name="orderShipping.receiverMobile" value="156*****730"/>
+		<input type="hidden" name="orderShipping.receiverState" value="四川省"/>
+		<input type="hidden" name="orderShipping.receiverCity" value="成都市"/>
+		<input type="hidden" name="orderShipping.receiverDistrict" value="锦江区"/>
+		<input type="hidden" name="orderShipping.receiverAddress" value="春熙路10086号"/>
 </form>
 
 <!-- main -->
