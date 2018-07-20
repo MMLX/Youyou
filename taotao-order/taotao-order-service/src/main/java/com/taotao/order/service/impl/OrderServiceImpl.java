@@ -45,6 +45,7 @@ public class OrderServiceImpl implements OrderService {
         }
         //redis中有初始值了，自增
         String orderId = jedisClient.incr(ORDER_GEN_KEY).toString();
+        orderInfo.setOrderId(orderId);
         //包邮
         orderInfo.setPostFee("0");
         //1、未付款，2、已付款，3、未发货，4、已发货，5、交易成功，6、交易关闭
